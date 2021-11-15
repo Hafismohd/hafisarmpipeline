@@ -25,16 +25,3 @@ stages:
             csmFile: '$(Build.SourcesDirectory)/hafisarmpipeline/azuredeploy.parameters.json'
             csmParametersFile: '$(Build.SourcesDirectory)/hafisarmpipeline/azuredeploy.json'
             deploymentMode: 'Validation'
-        - task: AzurePowerShell@5
-          inputs:
-            azureSubscription: 'azdevarmconn'
-            ScriptType: 'InlineScript'
-            Inline: |
-              $Parameters = @{
-                ResourcegroupName     = "ARMDeploymentTest"
-                Templatefile          = ".\hafisarmpipeline\azuredeploy.json"
-                TemplateParameterfile = ".\hafisarmpipeline\azuredeploy.parameters.json"
-                Mode                  = 'Incremental'
-               }
-              $Result = Get-AzResourceGroupDeploymentWhatIfResult @Parameters
-              $Result
